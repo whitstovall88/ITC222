@@ -1,0 +1,56 @@
+Use MetroAlt
+Go
+
+Create table BusService
+(
+BusServiceKey int identity(1,1) primary key,
+BusServiceName nvarchar(255) not null,
+BusServiceDescription nvarchar(255) null,
+)
+
+Create table Maintenance 
+(
+MaintenanceKey int identity(1,1) primary key,
+MaintenanceDate date not null,
+BusKey int not null foreign key references Bus(BusKey),
+)
+
+Create table MaintenanceDetail
+(
+MaintenanceDetailKey int identity(1,1),
+MaintenanceKey int not null,
+EmployeeKey int not null,
+BusServiceKey int not null,
+MaintenanceNotes nvarchar(255)
+)
+
+Alter table MaintenanceDetail
+Add Constraint PK_id_MaintenanceDetailKey primary key (MaintenanceDetailKey)
+
+Alter table MaintenanceDetail
+Add Constraint FK_id_MaintenanceKey foreign key (MaintenanceKey)
+References Maintenance(MaintenanceKey)
+
+Alter table MaintenanceDetail
+Drop Constraint FK_id_EmployeeKey
+
+Alter table MaintenanceDetail
+Add Constraint FK_id_EmployeeKey foreign key (EmployeeKey)
+References Employee(EmployeeKey)
+
+Alter table MaintenanceDetail
+Add Constraint FK_id_BusServiceKey foreign key (BusServiceKey)
+References BusService(BusServiceKey)
+
+Alter table BusType
+Add BusTypeAccessible bit 
+
+Alter table Employee
+Add Constraint unique_email unique(EmployeeEmail)
+
+
+
+
+
+
+
