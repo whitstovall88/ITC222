@@ -1,0 +1,55 @@
+Use MetroAlt
+Go
+
+Select * From Employee 
+
+Select EmployeeLastName, EmployeeFirstName, EmployeeEmail 
+From Employee
+
+Select * From Employee
+Order by EmployeeLastName
+
+Select * From Employee
+Order by EmployeeHireDate DESC 
+
+Select EmployeeAddress From Employee
+Where EmployeeCity >'Seattle'
+
+Select EmployeeAddress From Employee
+Where Not EmployeeCity = 'Seattle'
+--Where EmployeeCity !='Seattle' --also works (C language), but not standard
+--Where EmployeeCity <>'Seattle' --also works (Visual Basic), but not standard
+
+Select * From Employee
+Where EmployeePhone is null
+
+Select * From Employee
+Where EmployeePhone is not null
+--Where Not EmployeePhone is null -- works too
+
+Select * From Employee
+Where EmployeeLastName like 'C%'
+
+Select EmployeeKey, EmployeeHourlyPayRate From EmployeePosition
+Order by EmployeeHourlyPayRate DESC
+
+Select EmployeeKey, EmployeeHourlyPayRate From EmployeePosition
+Where PositionKey = 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
