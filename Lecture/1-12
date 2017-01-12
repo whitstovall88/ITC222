@@ -1,0 +1,97 @@
+Use Community_Assist
+
+Select PersonLastName From Person
+Where PersonLastName like 'D%'
+
+--top 5
+Select Top 5 GrantRequestDate, GrantTypeKey, GrantRequestAmount From GrantRequest
+Order by GrantRequestAmount DESC
+
+--offset
+Select GrantRequestDate, GrantTypeKey, GrantRequestAmount From GrantRequest
+Order by GrantRequestAmount DESC
+--offset 5 rows fetch next 10 rows only
+--allows you to pick your places in your ordered lists, and how many you want them to return
+
+--aliasing
+Select Year(GrantRequestDate) as [Year], GrantTypeKey, GrantRequestAmount From GrantRequest
+Select Month(GrantRequestDate) as [Month], GrantTypeKey, GrantRequestAmount From GrantRequest
+Select Day(GrantRequestDate) as [Day], GrantTypeKey, GrantRequestAmount From GrantRequest
+
+--date type function
+Select DatePart(second,GrantRequestDate) From GrantRequest;
+Select DateDiff(Day,GetDate(),'3/23/2017') [Days Left in Quarter]
+
+
+Select DonationAmount, DonationAmount * .10 Operations, 
+DonationAmount *.90 Charity From Donation
+
+--casting
+Select DonationAmount, cast(DonationAmount as decimal(10,2)) * .10 Operations, 
+DonationAmount *.90 Charity From Donation
+
+Select format(DonationAmount, '$ #,##0.00') as Amount from Donation
+--substrings
+Declare @SocialSec as nchar(9)
+Set @SocialSec='519551234'
+
+Select SUBSTRING(@SocialSec,1,3) + '-' + SUBSTRING(@SocialSec,4,2) + '-' + SUBSTRING(@SocialSec,6,4)
+As SSNumber
+
+--aggregate functions
+Select Sum(DonationAmount) as total From Donation
+Select Avg(DonationAmount) as total From Donation
+Select Max(DonationAmount) as total From Donation
+Select Min(DonationAmount) as total From Donation
+Select Max(DonationAmount) as total From Person
+Select Max(PersonLastName) as total From Person
+
+Select GrantTypeKey, format(Avg(GrantRequestAmount), '$ #,##0.00') as Average,
+format(sum(GrantRequestAmount), '$ #,##0.00') as total
+From GrantRequest
+Group by GrantTypeKey
+-- this will create subgroups in the average, totals are grouped by the grant type
+
+--what if you wanted to only see over $400?
+Select GrantTypeKey, format(Avg(GrantRequestAmount), '$ #,##0.00') as Average,
+format(sum(GrantRequestAmount), '$ #,##0.00') as total
+From GrantRequest
+Group by GrantTypeKey
+Having Avg(GrantRequestAmount) > 400
+--have to use Having when dealing with an aggregate number. 
+
+--where you can use Where and Having:
+Select GrantTypeKey, format(Avg(GrantRequestAmount), '$ #,##0.00') as Average,
+format(sum(GrantRequestAmount), '$ #,##0.00') as total
+From GrantRequest
+Where not GrantTypeKey = 2
+Group by GrantTypeKey
+Having Avg(GrantRequestAmount) > 400
+-- not is the more standard ascii, but you can also do != and <>
+
+--you can query the metadetail
+Select name From sys.Tables --sys queries are system queries
+--gives you the name of all the tables of the db you're already in (it's context sensitive)
+Select * From sys.Tables 
+--names, object ids, creation/modify dates, schema
+Select* From sys.all_columns 
+-- column names are metadata
+--metadata is data that describes data
+Select * From sys.all_columns where object_ID=373576369
+--where you know a specific id
+Select * From sys.Databases 
+--all the dbs on this server, even tho ur in one db right now; it knows to show them all
+
+--this will all be posted
+
+
+
+
+
+
+
+
+
+
+
+
