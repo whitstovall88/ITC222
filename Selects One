@@ -33,21 +33,22 @@ Where EmployeeLastName like 'C%'
 Select EmployeeKey, EmployeeHourlyPayRate From EmployeePosition
 Order by EmployeeHourlyPayRate DESC
 
+--11. List all the employee keys and their hourly wage for those with PositionKey equal to 2 (mechanics)
 Select EmployeeKey, EmployeeHourlyPayRate From EmployeePosition
 Where PositionKey = 2
 
+--12. Return the top 10 of the query for question 11
+Select Top 10 EmployeeKey, EmployeeHourlyPayRate From EmployeePosition
+Where PositionKey = 2
 
 
+--13. Using the same query offset by 20 and list 10
+Select Top 10 EmployeeKey, EmployeeHourlyPayRate From EmployeePosition
+Where PositionKey = 2
+offset 20 rows fetch next 10 rows only;
+Limit 10 Offset 20 
 
-
-
-
-
-
-
-
-
-
+--14. Return the busdriverKey and the busrouteKey but remove all duplicates (BusScheduleAssignment)
 
 
 
