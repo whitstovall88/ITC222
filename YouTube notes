@@ -1,0 +1,57 @@
+/*Selects Two*/
+Use MetroAlt
+Go
+
+/*List the years in which employees were hired, sort by year and then last name*/
+Select EmployeeHireDate, EmployeeLastName
+From Employee 
+Order by EmployeeHireDate, EmployeeLastName 
+
+/*COMMENT ALIASING: how to output the columns with new names and not the db table names*/
+--the 'as' keyword is optional. it'll behave the same without it. 
+Select EmployeeLastName as [Last Name]
+Select EmployeeFirstName as [First Name]
+Select EmployeeEmail as Email
+From Employee
+
+/*CONCATENATE COLUMN NAMES: how to output Last Name, First Name under Name column in one column*/
+Select EmployeeLastName + ',' + EmployeeFirstName as Name,
+EmployeeEmail as Email
+From Employee
+
+/*Where clauses: affect what columns you see*/
+Select * From EmployeeAddress
+Where EmployeeCity = 'Seattle'
+--single quotes for character strings/values being searched for exact match, double quotes for column names. 
+--you could run the comment aliasing code and sub double quotes for square brackets:
+Select EmployeeLastName as "Last Name"
+Select EmployeeFirstName as "FirstName"
+From Employee
+
+--WHERE CLAUSES 
+Select * from Employee
+Where EmployeeHireDate = '3/8/2014'
+
+/*List only the employees who were hired between 2013 and 2015*/
+Select * From Employee
+Where EmployeeHireDate >'1/1/2013' And EmployeeHireDate <'12/31/2015'
+--you can do exactly the same thing here:
+Select * From Employee
+Where EmployeeHireDate between'1/1/2013' And '12/31/2015'
+ 
+--WHERE CLAUSES
+Select * From EmployeePosition
+Where EmployeeHourlyPayRate > 50
+--character types are quoted, numbers are not. Date is considered a type of string/character type.
+
+--searching for a character
+Select EmployeeLastName, EmployeeFirstName, EmployeeEmail from Employee
+Where EmployeeLastName like 'H%'
+--searching for a string
+Select EmployeeLastName, EmployeeFirstName, EmployeeEmail from Employee
+Where EmployeeLastName like '%and%'
+
+/*1. List the years in which employees were hired, sort by year and then last name
+Select EmployeeHireDate, EmployeeLastName From Employee
+Order by EmployeeHireDate, EmployeeLastName
+
