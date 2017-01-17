@@ -1,0 +1,88 @@
+--Joins--
+
+
+--hour late to class, fill in beginning from video/notes
+
+Use Community_Assist
+Select PersonLastName, DonationAmount
+From Person, Donation
+
+Select PersonLastName, DonationAmount
+From Person
+Cross Join Donation
+
+Select PersonLastName, PersonEmail, ContactNumber, DonationAmount
+From Person, Contact, Donation
+Where Person.PersonKey = Contact.PersonKey
+And Person.PersonKey = Donation.PersonKey
+And ContactTypeKey=1
+
+Select PersonLastName, PersonEmail, ContactNumber, DonationAmount
+From Person
+Inner Join Contact 
+On Person.PersonKey=Contact.PersonKey
+Inner Join Donation
+On Person.PersonKey=Donation.PersonKey
+Where ContactTypeKey=1
+
+--alias above example
+Select p.PersonKey, PersonLastName, PersonEmail, ContactNumber, DonationAmount
+From Person p
+Inner Join Contact c
+On p.PersonKey=c.PersonKey 
+Inner Join Donation d
+On p.PersonKey=d.PersonKey
+Where ContactTypeKey=1
+
+
+--Inner join on GrantRequest, GrantReview
+Select * From GrantRequest --just to get the lay of the land
+Select * From GrantReview -- same as above
+--Inner joins and aggregate functions. This is where you start to get something very useful.
+Select Year(GrantRequestDate) [Year], GrantTypeName, Sum(GrantRequestAmount) as Request,
+Sum(GrantAllocationAmount) as Granted
+From GrantRequest gr
+Inner Join GrantType gt
+On gr.GrantTypeKey=gt.GrantTypeKey
+Inner Join GrantReview gv
+On gv.GrantRequestKey=gr.GrantRequestKey
+Group By Year(GrantRequestDate), GrantTypeName
+Order By Year(GrantRequestDate)
+
+--percent of above
+--Sum(GrantAllocationAmount)/Sumr(GrantRequestAmount) * 100 as Percentage-- in theory, list after Granted,
+
+--outer joins returns all of the records on one side, and only the matches on the other
+Select GrantTypeName, GrantRequest.GrantTypeKey 
+From GrantType
+Left Outer Join GrantRequest
+On GrantType.GrantTypeKey = GrantRequest.GrantRequestKey
+Where GrantRequest.GrantTypeKey is null 
+
+Select ContactTypeName, Contact.ContactTypeKey 
+From ContactType
+Left Outer Join Contact
+On ContactType.ContactTypeKey = Contact.ContactTypeKey 
+Where Contact.ContactTypeKey is null 
+
+--full join, using above (full join returns everything on both sides, doing it for both tables/instead of one side like inner join.
+Select Distinct ContactTypeName, Contact.ContactTypeKey 
+From ContactType
+Full Join Contact
+On ContactType.ContactTypeKey = Contact.ContactTypeKey 
+
+--joins can be useful when u have a lot of numeric keys and are joining databases, and not sure where to put things. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
