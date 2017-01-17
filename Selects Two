@@ -1,23 +1,52 @@
 Use MetroAlt
 Go
-
---1. List the years in which employees were hired, sort by year and then last name.
+--
 Select EmployeeHireDate, EmployeeLastName From Employee
 Order by EmployeeHireDate, EmployeeLastName
-
---2. What is the difference in Months between the first employee hired and the last one.
-
---3. Output the employee phone number so it looks like (206)555-1234.
---4. Output the employee hourly wage so it looks like $45.00 (EmployeePosition).
---5. List only the employees who were hired between 2013 and 2015.
---6. Output the position, the hourly wage and the hourly wage multiplied by 40 to see what a weekly wage might look like.
---7. What is the highest hourly pay rate (EmployeePosition)?
---8. What is the lowest hourly pay rate?
---9. What is the average hourly pay rate?
---10. What is the average pay rate by position?
---11. Provide a count of how many employees were hired each year and each month of the year.
+--
+Select DateDiff(Month,'1995-01-06','2014-12-16') As DiffDate;
+--
+Declare @EmplPhone as nchar(13)
+Set @EmplPhone='(206)555-1234'
+Select SUBSTRING(@EmplPhone,1,5) + SUBSTRING(@EmplPhone,6,4) + SUBSTRING(@EmplPhone,10,4)
+EmployeePhone
+--
+Select Format(EmployeeHourlyPayRate, '$ ##.00') as Pay From EmployeePosition 
+--
+Select * From Employee
+Where EmployeeHireDate >'1/1/2013' And EmployeeHireDate <'12/31/2015'
+/*you can do exactly the same thing here:
+Select * From Employee
+Where EmployeeHireDate between'1/1/2013' And '12/31/2015'
+*/
+--
+Select PositionKey, EmployeeHourlyPayRate, cast(EmployeeHourlyPayRate as decimal(4,2))* .10 Operations,
+EmployeeHourlyPayRate * 40 [Weekly Wage] From EmployeePosition
+--
+Select Max(EmployeeHourlyPayRate) as Total From EmployeePosition
+--
+Select Min(EmployeeHourlyPayRate) as Total From EmployeePosition
+--
+Select Avg(EmployeeHourlyPayRate) as Total From EmployeePosition
+--
+Select PositionKey, format(Avg(EmployeeHourlyPayRate), '$ #0.00') As Average From EmployeePosition
+Group by PositionKey 
+--11. Provide a count of how many employees were hired each year and each month of the year
+Select 
+Year(EmployeePositionDateAssigned) as [Year], 
+Month(EmployeePositionDateAssigned) as [Month]
+From EmployeePosition
+----------------still working above
 --12. Do the query 11 again but with a case structure to output the months as words.
---13. Return which positions average more than $50 an hour.
---14. List the total number of riders on Metroalt busses (RiderShip).
---15. List all the tables in the metroAlt databases (system views).
---16. List all the databases on server.
+Select * From EmployeePosition
+Where EmployeeHourlyPayRate > 50
+--
+Select Sum(Riders) as Total From Ridership
+ --
+Select * From sys.Tables
+Order by Name
+--
+Select * From sys.databases
+Order by Name 
+
+
