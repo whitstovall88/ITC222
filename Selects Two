@@ -50,3 +50,15 @@ Select * From sys.databases
 Order by Name 
 
 
+
+** Month,Date, then Count for 11, then for 12:
+
+Select Year(HireDate) as [Year]
+Case Month(HireDate) 
+When 1 then 'January'
+When 2 then 'February'
+End as [Month]
+From Employee
+
+(I can also use the DateTime function??)
+
